@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/aop 
+           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+	<!-- 
+		1、把action、service、dao层的类导入进来
+		2、声明切面
+		3、进行aop的配置
+	 -->
+	 <bean id="personDao" class="cn.itcast.spring0909.aop.exception.dao.PersonDaoImpl"></bean>
+	 
+	 <bean id="personService" class="cn.itcast.spring0909.aop.exception.service.PersonServiceImpl">
+	 	<property name="personDao">
+	 		<ref bean="personDao"/>
+	 	</property>
+	 </bean>
+	 
+	 <bean id="personAction" class="cn.itcast.spring0909.aop.exception.action.PersonAction">
+	 	<property name="personService">
+	 		<ref bean="personService"/>
+	 	</property>
+	 </bean>
+	 
+	 <bean id="myException" class="cn.itcast.spring0909.aop.exception.MyException"></bean>
+	 
+	 <aop:config>
+	 	<aop:pointcut expression="execution(* cn.itcast.spring0909.aop.exception.service.*.*(..))" id="perform"/>
+		<aop:aspect ref="myException">
+			<aop:after-throwing method="getExcpetionMessage" throwing="ex" pointcut-ref="perform"/>
+		</aop:aspect>
+	 </aop:config>
+</beans>

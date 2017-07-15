@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+	<display-name></display-name>
+	
+	
+	<!-- 监听spring上下文容器 -->
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+	
+	<!-- 加载spring的xml配置文件到 spring的上下文容器中 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:root-context.xml</param-value>
+	</context-param>
+	
+	<!-- 配置Spring MVC DispatcherServlet -->
+	<servlet>
+		<servlet-name>MVC</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- 初始化参数 -->
+		<init-param>
+			<!-- 加载SpringMVC的xml到 spring的上下文容器中 -->
+			<param-name>contextConfigLocation</param-name>
+			<param-value>
+				/WEB-INF/classes/mvc*.*
+			</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<!-- 配置DispatcherServlet所需要拦截的 url -->
+	<servlet-mapping>
+		<servlet-name>MVC</servlet-name>
+		<url-pattern>*.html</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
+
+</web-app>

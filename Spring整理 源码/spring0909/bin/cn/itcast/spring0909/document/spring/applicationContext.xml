@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	<!-- 把documentManager,worddocument,exceldocument,pdfdocument -->
+	<bean id="documentManager" class="cn.itcast.spring0909.document.spring.DocumentManager">
+		<!-- 
+			document是一个接口
+		 -->
+		<property name="document">
+		    <!-- 
+		    	通过ref给接口赋值
+		     -->
+			<ref bean="wordDocument"/>
+		</property>
+	</bean>
+
+	<bean id="wordDocument" class="cn.itcast.spring0909.document.spring.WordDocument"></bean>
+
+	<bean id="excelDocument" class="cn.itcast.spring0909.document.spring.ExcelDocument"></bean>
+
+	<bean id="pdfDocument" class="cn.itcast.spring0909.document.spring.PDFDocument"></bean>
+</beans>

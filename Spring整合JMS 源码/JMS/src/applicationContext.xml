@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+<bean id="connectionFactory"
+  class="org.apache.activemq.ActiveMQConnectionFactory">
+<property name="brokerURL" value="tcp://localhost:61616"></property>
+</bean>
+<bean id="rantzDestination" class="org.apache.activemq.command.ActiveMQQueue">
+<constructor-arg index="0" value="rantz.marketing.queue"></constructor-arg>
+</bean>
+<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+  <property name="connectionFactory" ref="connectionFactory"></property>
+  <property name="defaultDestination" ref="rantzDestination"></property>
+  <property name="receiveTimeout" value="6000"></property>
+
+</bean>
+<bean id="sender" class="com.roadrantz.marketing.Sender">
+  <property name="jmsTemplate" ref="jmsTemplate"></property>
+
+</bean>
+<bean id="receiver" class="com.roadrantz.marketing.Receiver">
+  <property name="jmsTemplate" ref="jmsTemplate"></property>
+</bean>
+</beans>

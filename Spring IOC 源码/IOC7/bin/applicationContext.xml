@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+
+  <bean id="dao" class="com.tgb.container.dao.impl.Dao4MySqlImpl" />
+  
+  <bean id="service" class="com.tgb.container.service.impl.ServiceImpl">
+  	<property name="dao" ref="dao"></property>
+  </bean>
+	
+</beans>
